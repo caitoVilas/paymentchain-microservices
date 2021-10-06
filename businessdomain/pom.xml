@@ -15,6 +15,7 @@
     <modules>
         <module>products</module>
         <module>customers</module>
+        <module>transactions</module>
     </modules>
 
     <properties>

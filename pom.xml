@@ -179,6 +179,8 @@
     <modules>
         <module>businessdomain</module>
         <module>infrastructuredomain</module>
+        <module>transactions</module>
+        <module>transactions</module>
     </modules>
 
 

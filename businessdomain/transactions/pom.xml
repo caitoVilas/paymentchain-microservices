@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>products</artifactId>
-    <name>products</name>
+    <artifactId>transactions</artifactId>
+    <name>transactions</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}</endorsed.dir>

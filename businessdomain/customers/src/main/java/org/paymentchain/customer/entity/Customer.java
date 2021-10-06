@@ -24,9 +24,9 @@ public class Customer {
     private String surname;
     private String phone;
     private String address;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "customer_id")
-    private List<CustomerProducts> products;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CustomerProduct> products;
     @Transient
     private List<?> transactions;
+
 }
