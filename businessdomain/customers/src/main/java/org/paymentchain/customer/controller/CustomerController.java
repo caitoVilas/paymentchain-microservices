@@ -29,10 +29,10 @@ public class CustomerController {
     @Autowired
     private CustomerRepository repository;
 
-    private final WebClient.Builder webclientBuilder;
+    private final WebClient.Builder webClientBuilder;
 
     public CustomerController(WebClient.Builder webclientBuilder) {
-        this.webclientBuilder = webclientBuilder;
+        this.webClientBuilder = webclientBuilder;
     }
 
     //redefine timeout
@@ -44,16 +44,16 @@ public class CustomerController {
                 connection.addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.MILLISECONDS));
             });
 
-    private <T>List<T> getTransacctions(String accontIban){
+    private <T> List<T> getTransacctions(String accontIban){
 
-        WebClient client = webclientBuilder.clientConnector(
+        WebClient client = webClientBuilder.clientConnector(
                 new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
                 .baseUrl("http://localhost:8082/transactions")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8082/transactions"))
                 .build();
         List<Object> block = client.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder
-                .path("/transactions")
+                .path("/transaction")
                 .queryParam("ibanAccount", accontIban)
                 .build())
                 .retrieve().bodyToFlux(Object.class).collectList().block();
@@ -63,7 +63,7 @@ public class CustomerController {
 
     private String getProductName(Long id){
 
-        WebClient client = webclientBuilder.clientConnector(
+        WebClient client = webClientBuilder.clientConnector(
                 new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
                 .baseUrl("http://localhost:8083/products")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -106,8 +106,9 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
 
-        Customer newcustumer = repository.save(customer);
-        return ResponseEntity.ok(newcustumer);
+        customer.getProducts().forEach(x -> x.setCustomer(customer));
+        Customer customerNew = repository.save(customer);
+        return ResponseEntity.ok(customerNew);
     }
 
     @DeleteMapping("/{id}")

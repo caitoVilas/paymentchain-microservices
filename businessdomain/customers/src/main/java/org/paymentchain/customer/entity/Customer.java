@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class Customer {
     private String phone;
     private String address;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CustomerProduct> products;
+    private List<CustomerProduct> products = new ArrayList<CustomerProduct>();
     @Transient
     private List<?> transactions;
 
