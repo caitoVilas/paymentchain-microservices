@@ -48,9 +48,9 @@ public class CustomerController {
 
         WebClient client = webClientBuilder.clientConnector(
                 new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
-                .baseUrl("http://localhost:8082/transactions")
+                .baseUrl("http://businessdomain-transactions/transactions")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8082/transactions"))
+                .defaultUriVariables(Collections.singletonMap("url", "http://businessdomain-transactions/transactions"))
                 .build();
         List<Object> block = client.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder
                 .path("/transaction")
@@ -65,9 +65,9 @@ public class CustomerController {
 
         WebClient client = webClientBuilder.clientConnector(
                 new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
-                .baseUrl("http://localhost:8083/products")
+                .baseUrl("http://businessdomain-products/products")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8083/products"))
+                .defaultUriVariables(Collections.singletonMap("url", "http://businessdomain-products/products"))
                 .build();
         JsonNode block = client.method(HttpMethod.GET).uri("/"+id)
                 .retrieve().bodyToMono(JsonNode.class).block();
