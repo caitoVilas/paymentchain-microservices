@@ -11,6 +11,7 @@
         <module name="customers" />
         <module name="transactions" />
         <module name="adminserver" />
+        <module name="configServer" />
         <module name="products" />
       </profile>
     </annotationProcessing>
